@@ -1,8 +1,8 @@
 import { DataModel } from "@toolpad/core";
 
-export interface ICategory extends DataModel
+export interface ICategory 
 {
-    id:string,
+    id?:string,
     name:string,
     description:string
 }
