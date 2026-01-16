@@ -7,6 +7,7 @@ import DashboardPage from './pages';
 import Categories from './pages/Category/categories';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import Products from './pages/Product/products';
 
 
 
@@ -25,7 +26,12 @@ const router = createBrowserRouter([
           {
             path: 'categories',
             Component: Categories
+          },
+           {
+            path: 'products',
+            Component: Products
           }
+
 
         ],
       },

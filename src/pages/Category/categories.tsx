@@ -34,15 +34,6 @@ export default function Categories() {
 
 
 
-    useEffect(() => {
-
-        categoryService.getAll().then(
-            res => dispatch(setCategory(res.items))
-        )
-
-    }, [])
-
-
     function removeCategory(id: string) {
         categoryService.deleteCategory(id).then(res => {
             if (res.success) {
@@ -65,7 +56,7 @@ export default function Categories() {
 
     const openEditModal = (id: string) => {
 
-        setCategory(id)
+      
         setModalState({
             open: true,
             mode: "edit",
@@ -98,7 +89,7 @@ export default function Categories() {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Id</TableCell>
+                             
                             <TableCell align="right">Kategori Adı</TableCell>
                             <TableCell align="right">Kategori Açıklaması</TableCell>
                             <TableCell align="right">İşlemler</TableCell>
@@ -111,9 +102,7 @@ export default function Categories() {
                                 key={row.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                                <TableCell component="th" scope="row">
-                                    {row.id}
-                                </TableCell>
+                              
                                 <TableCell align="right">{row.name}</TableCell>
                                 <TableCell align="right">{row.description}</TableCell>
                                 <TableCell align="right">{
