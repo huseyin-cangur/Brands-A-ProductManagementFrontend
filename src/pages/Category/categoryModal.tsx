@@ -9,6 +9,7 @@ import { TextField } from '@mui/material';
 import { categoryService } from '../../services/categorService';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { addCategory, updateCategory } from './CategorySlice';
+import { toast } from 'react-toastify';
 
 const style = {
     position: 'absolute',
@@ -95,6 +96,7 @@ export const CategoryModal: React.FC<MyModalProps> = ({ open, mode, categoryId, 
 
         request.then((res) => {
             if (res.success) {
+                toast.success(res.message)
                 dispatch(isEdit ? updateCategory(res.data) : addCategory(res.data));
                 closeModal();
             }

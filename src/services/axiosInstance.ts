@@ -1,11 +1,8 @@
-import axios, {
-  AxiosError,
-  AxiosInstance,
-  AxiosResponse
-} from "axios";
+import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
+import { toast } from "react-toastify";
 
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL, 
+  baseURL: import.meta.env.VITE_API_URL,
   timeout: 15000,
   withCredentials: true,
   headers: {
@@ -14,27 +11,17 @@ const axiosInstance: AxiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.response.use(
-  (response: AxiosResponse) => response,
-  (error: AxiosError) => {
-    if (error.response) {
-      const status = error.response.status;
+  (response) => response,
+  (error) => {
 
-      switch (status) {
-        case 401:
-          console.error("Yetkisiz erişim (401)");
+    console.log(error?.response)
+    const message =
+      error?.response?.data.detail || "Beklenmeyen bir hata oluştu";
 
-          break;
+    toast.error(message);
 
-        case 403:
-          console.error("Erişim reddedildi (403)");
-          break;
-
-        case 500:
-          console.error("Sunucu hatası (500)");
-          break;
-      }
-    }
-  }
+    return Promise.reject(error);
+  },
 );
 
-export default axiosInstance
+export default axiosInstance;

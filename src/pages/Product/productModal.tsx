@@ -12,8 +12,8 @@ import { productService } from '../../services/productService';
 import { addProduct, updateProduct } from './ProductSlice';
 import { setCategory } from '../Category/CategorySlice';
 import { useEffect } from 'react';
-
-
+import { toast } from 'react-toastify';
+ 
 const style = {
     position: 'absolute',
     top: '50%',
@@ -52,7 +52,7 @@ export const ProductModal: React.FC<MyModalProps> = ({ open, mode, productId, on
     useEffect(() => {
 
         categoryService.getAll().then(
-            res => dispatch(setCategory(res.items))
+            res => dispatch(setCategory(res))
         )
 
     }, [])
@@ -112,6 +112,8 @@ export const ProductModal: React.FC<MyModalProps> = ({ open, mode, productId, on
 
         request.then((res) => {
             if (res.success) {
+           
+                toast.success(res.message);
                 dispatch(isEdit ? updateProduct(res.data) : addProduct(res.data));
                 closeModal();
             }

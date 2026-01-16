@@ -1,10 +1,12 @@
 import { Delete, Edit } from "@mui/icons-material";
-import { Box, Button, Container, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Button, Container, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Typography } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { productService } from "../../services/productService";
 import { deleteProduct, setProduct } from "./ProductSlice";
 import { useEffect, useState } from "react";
 import { ProductModal } from "./productModal";
+import { IPageRequest } from "../../model/IPageRequest";
+import { toast } from "react-toastify";
 
 
 export default function Products() {
@@ -29,21 +31,27 @@ export default function Products() {
     const dispatch = useAppDispatch();
 
 
-    const { products } = useAppSelector((state) => state.products)
+
+    const {
+        products,
+        pageIndex,
+        pageSize,
+        totalCount
+    } = useAppSelector((state) => state.products);
 
     useEffect(() => {
 
-        productService.getAll().then(
-            res => dispatch(setProduct(res.items))
-        )
 
-    }, [])
+
+        productService.getAll(pageIndex, pageSize)
+            .then(res => dispatch(setProduct(res)));
+    }, [pageIndex, pageSize]);
 
 
     function removeProduct(id: string) {
         productService.deleteProduct(id).then(res => {
             if (res.success) {
-
+                toast.success(res.message)
                 dispatch(deleteProduct(res.data.id))
             }
         }
@@ -130,7 +138,24 @@ export default function Products() {
                                 </TableRow>
                             ))}
                         </TableBody>
+
                     </Table>
+                    <TablePagination
+                        component="div"
+                        count={totalCount}
+                        page={pageIndex}
+                        onPageChange={(_, newPage) => {
+                            productService.getAll(newPage, pageSize)
+                                .then(res => dispatch(setProduct(res)));
+                        }}
+                        rowsPerPage={pageSize}
+                        onRowsPerPageChange={(e) => {
+                            const newSize = parseInt(e.target.value, 10);
+                            productService.getAll(0, newSize)
+                                .then(res => dispatch(setProduct(res)));
+                        }}
+                        rowsPerPageOptions={[5, 10, 25]}
+                    />
                 </TableContainer>
             </Container>
 

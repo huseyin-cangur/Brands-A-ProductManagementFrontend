@@ -1,5 +1,5 @@
 
-import { Box, Button, Container, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Button, Container, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { categoryService } from "../../services/categorService";
@@ -7,6 +7,7 @@ import { setCategory, deleteCategory } from "./CategorySlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { CategoryModal } from "./categoryModal";
 import { Delete, Edit } from "@mui/icons-material";
+import { toast } from "react-toastify";
 
 
 
@@ -28,15 +29,34 @@ export default function Categories() {
 
 
 
+
+
+
     const dispatch = useAppDispatch();
-    const { categories } = useAppSelector((state) => state.categories)
-   
+
+
+    const {
+        categories,
+        pageIndex,
+        pageSize,
+        totalCount
+    } = useAppSelector((state) => state.categories);
+
+    useEffect(() => {
+
+
+
+        categoryService.getAll(pageIndex, pageSize)
+            .then(res => dispatch(setCategory(res)));
+    }, [pageIndex, pageSize]);
+
 
 
 
     function removeCategory(id: string) {
         categoryService.deleteCategory(id).then(res => {
             if (res.success) {
+                toast.success(res.message)
 
                 dispatch(deleteCategory(res.data.id))
             }
@@ -56,7 +76,7 @@ export default function Categories() {
 
     const openEditModal = (id: string) => {
 
-      
+
         setModalState({
             open: true,
             mode: "edit",
@@ -89,7 +109,7 @@ export default function Categories() {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                             
+
                             <TableCell align="right">Kategori Adı</TableCell>
                             <TableCell align="right">Kategori Açıklaması</TableCell>
                             <TableCell align="right">İşlemler</TableCell>
@@ -102,7 +122,7 @@ export default function Categories() {
                                 key={row.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                              
+
                                 <TableCell align="right">{row.name}</TableCell>
                                 <TableCell align="right">{row.description}</TableCell>
                                 <TableCell align="right">{
@@ -120,6 +140,22 @@ export default function Categories() {
                             </TableRow>
                         ))}
                     </TableBody>
+                    <TablePagination
+                        component="div"
+                        count={totalCount}
+                        page={pageIndex}
+                        onPageChange={(_, newPage) => {
+                            categoryService.getAll(newPage, pageSize)
+                                .then(res => dispatch(setCategory(res)));
+                        }}
+                        rowsPerPage={pageSize}
+                        onRowsPerPageChange={(e) => {
+                            const newSize = parseInt(e.target.value, 10);
+                            categoryService.getAll(0, newSize)
+                                .then(res => dispatch(setCategory(res)));
+                        }}
+                        rowsPerPageOptions={[5, 10, 25]}
+                    />
                 </Table>
             </TableContainer>
         </Container>

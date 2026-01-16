@@ -5,26 +5,29 @@ import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantity
 import { Outlet } from 'react-router';
 import { ReactRouterAppProvider } from '@toolpad/core/react-router';
 import type { Navigation } from '@toolpad/core/AppProvider';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const NAVIGATION: Navigation = [
   {
     kind: 'header',
     title: 'Menü',
   },
- 
+
   {
     segment: 'categories',
     title: 'Kategoriler',
     pattern: 'categories{/:categoryId}*',
-    icon: <InboxIcon/>,
+    icon: <InboxIcon />,
   },
+  
   {
     segment: 'products',
     title: 'Ürünler',
     pattern: 'products{/:productId}*',
-    icon: <ProductionQuantityLimitsIcon/>,
+    icon: <ProductionQuantityLimitsIcon />,
   }
-   
+
 ];
 
 const BRANDING = {
@@ -34,12 +37,13 @@ const BRANDING = {
 
 export default function App() {
 
-  
-  
+
+
   return (
 
-    
+
     <ReactRouterAppProvider navigation={NAVIGATION} branding={BRANDING}>
+      <ToastContainer />
       <Outlet />
     </ReactRouterAppProvider>
   );
