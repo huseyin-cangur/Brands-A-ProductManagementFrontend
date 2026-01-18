@@ -31,7 +31,7 @@ export default function SignIn() {
 
       const response = await authService.login(email, password);
 
-      console.log("response",response)
+      
 
       localStorage.setItem("accessToken", response.accessToken.token);
 
