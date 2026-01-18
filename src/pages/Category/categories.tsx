@@ -110,9 +110,9 @@ export default function Categories() {
                     <TableHead>
                         <TableRow>
 
-                            <TableCell align="right">Kategori Adı</TableCell>
-                            <TableCell align="right">Kategori Açıklaması</TableCell>
-                            <TableCell align="right">İşlemler</TableCell>
+                            <TableCell>Kategori Adı</TableCell>
+                            <TableCell>Kategori Açıklaması</TableCell>
+                            <TableCell>İşlemler</TableCell>
 
                         </TableRow>
                     </TableHead>
@@ -123,9 +123,9 @@ export default function Categories() {
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
 
-                                <TableCell align="right">{row.name}</TableCell>
-                                <TableCell align="right">{row.description}</TableCell>
-                                <TableCell align="right">{
+                                <TableCell>{row.name}</TableCell>
+                                <TableCell>{row.description}</TableCell>
+                                <TableCell>{
                                     <Box>
                                         <IconButton onClick={() => removeCategory(row.id ?? "")} color="error">
                                             <Delete />

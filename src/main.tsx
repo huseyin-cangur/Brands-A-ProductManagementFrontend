@@ -8,6 +8,7 @@ import Categories from './pages/Category/categories';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import Products from './pages/Product/products';
+import Users from './pages/User/Users';
 
 
 
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
            {
             path: 'products',
             Component: Products
+          },
+           {
+            path: 'users',
+            Component: Users
           }
 
 

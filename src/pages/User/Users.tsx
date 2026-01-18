@@ -1,15 +1,17 @@
+
+
 import { Delete, Edit } from "@mui/icons-material";
 import { Box, Button, Container, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Typography } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { productService } from "../../services/productService";
-import { deleteProduct, setProduct } from "./ProductSlice";
 import { useEffect, useState } from "react";
-import { ProductModal } from "./productModal";
 
 import { toast } from "react-toastify";
+import { userService } from "../../services/userService";
+import { deleteUser, setUser } from "./UserSlice";
+import { UserModal } from "./UserModal";
 
 
-export default function Products() {
+export default function Users() {
 
     type ModalMode = "create" | "edit";
 
@@ -17,12 +19,12 @@ export default function Products() {
     const [modalState, setModalState] = useState<{
         open: boolean;
         mode: ModalMode;
-        productId: string | null
+        userId: string | null
 
     }>({
         open: false,
         mode: "create",
-        productId: null
+        userId: null
     });
 
 
@@ -33,26 +35,26 @@ export default function Products() {
 
 
     const {
-        products,
+        users,
         pageIndex,
         pageSize,
         totalCount
-    } = useAppSelector((state) => state.products);
+    } = useAppSelector((state) => state.users);
 
     useEffect(() => {
 
 
 
-        productService.getAll(pageIndex, pageSize)
-            .then(res => dispatch(setProduct(res)));
+        userService.getAll(pageIndex, pageSize)
+            .then(res => dispatch(setUser(res)));
     }, [pageIndex, pageSize]);
 
 
-    function removeProduct(id: string) {
-        productService.deleteProduct(id).then(res => {
+    function removeUser(id: string) {
+        userService.deleteUser(id).then(res => {
             if (res.success) {
                 toast.success(res.message)
-                dispatch(deleteProduct(res.data.id))
+                dispatch(deleteUser(res.data.id))
             }
         }
 
@@ -64,7 +66,7 @@ export default function Products() {
         setModalState({
             open: true,
             mode: "create",
-            productId: null
+            userId: null
         });
     };
 
@@ -74,7 +76,7 @@ export default function Products() {
         setModalState({
             open: true,
             mode: "edit",
-            productId: id
+            userId: id
 
         });
     };
@@ -92,13 +94,13 @@ export default function Products() {
                     }}
                 >
                     <Typography variant="h5" fontWeight="bold">
-                        Ürünler
+                        Kullanıcılar
                     </Typography>
 
                     <Button sx={{ ml: "auto" }}
                         variant="contained" size="small" color="primary" onClick={() => openCreateModal()}>
 
-                        Ürün Ekle</Button>
+                        Kullanıcı Ekle</Button>
                 </Box>
 
 
@@ -108,24 +110,26 @@ export default function Products() {
                         <TableHead>
                             <TableRow>
 
-                                <TableCell align="right">Ürün Adı</TableCell>
-                                <TableCell align="right">Ürün Açıklaması</TableCell>
+                                <TableCell align="right">Adı</TableCell>
+                                <TableCell align="right">Soyadı</TableCell>
+                                <TableCell align="right">Mail</TableCell>
                                 <TableCell align="right">İşlemler</TableCell>
 
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {products?.map((row) => (
+                            {users?.map((row) => (
                                 <TableRow
                                     key={row.id}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
 
-                                    <TableCell align="right">{row.name}</TableCell>
-                                    <TableCell align="right">{row.description}</TableCell>
+                                    <TableCell align="right">{row.firstName}</TableCell>
+                                    <TableCell align="right">{row.lastName}</TableCell>
+                                    <TableCell align="right">{row.email}</TableCell>
                                     <TableCell align="right">{
                                         <Box>
-                                            <IconButton onClick={() => removeProduct(row.id ?? "")} color="error">
+                                            <IconButton onClick={() => removeUser(row.id ?? "")} color="error">
                                                 <Delete />
                                             </IconButton>
                                             <IconButton onClick={() => openEditModal(row.id ?? "")}>
@@ -145,24 +149,24 @@ export default function Products() {
                         count={totalCount}
                         page={pageIndex}
                         onPageChange={(_, newPage) => {
-                            productService.getAll(newPage, pageSize)
-                                .then(res => dispatch(setProduct(res)));
+                            userService.getAll(newPage, pageSize)
+                                .then(res => dispatch(setUser(res)));
                         }}
                         rowsPerPage={pageSize}
                         onRowsPerPageChange={(e) => {
                             const newSize = parseInt(e.target.value, 10);
-                            productService.getAll(0, newSize)
-                                .then(res => dispatch(setProduct(res)));
+                            userService.getAll(0, newSize)
+                                .then(res => dispatch(setUser(res)));
                         }}
                         rowsPerPageOptions={[5, 10, 25]}
                     />
                 </TableContainer>
             </Container>
 
-            <ProductModal
+            <UserModal
                 open={modalState.open}
                 mode={modalState.mode}
-                productId={modalState.productId}
+                userId={modalState.userId}
                 onClose={() =>
                     setModalState(prev => ({ ...prev, open: false }))
                 }

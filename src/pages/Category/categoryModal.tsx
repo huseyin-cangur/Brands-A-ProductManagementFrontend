@@ -144,7 +144,7 @@ export const CategoryModal: React.FC<MyModalProps> = ({ open, mode, categoryId, 
                                 rules={{
                                     required: "Kategori adı zorunludur",
                                     minLength: {
-                                        value: 3,
+                                        value: 2,
                                         message: "En az 2 karakter olmalıdır",
                                     },
                                 }}
@@ -166,7 +166,7 @@ export const CategoryModal: React.FC<MyModalProps> = ({ open, mode, categoryId, 
                                 rules={{
 
                                     minLength: {
-                                        value: 3,
+                                        value: 2,
                                         message: "En az 2 karakter olmalıdır",
                                     },
                                 }}

@@ -161,7 +161,7 @@ export const ProductModal: React.FC<MyModalProps> = ({ open, mode, productId, on
                                 rules={{
                                     required: "Ürün adı zorunludur",
                                     minLength: {
-                                        value: 3,
+                                        value: 2,
                                         message: "En az 2 karakter olmalıdır",
                                     },
                                 }}
@@ -183,7 +183,7 @@ export const ProductModal: React.FC<MyModalProps> = ({ open, mode, productId, on
                                 rules={{
 
                                     minLength: {
-                                        value: 3,
+                                        value: 2,
                                         message: "En az 2 karakter olmalıdır",
                                     },
                                 }}
