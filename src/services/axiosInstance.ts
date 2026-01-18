@@ -10,11 +10,23 @@ const axiosInstance: AxiosInstance = axios.create({
   },
 });
 
+axiosInstance.interceptors.request.use((config) => {
+  const token = localStorage.getItem("accessToken");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
+    
+    if (error.response?.status === 401) {
+      localStorage.removeItem("accessToken");
+      window.location.href = "/login";
+    }
 
-    console.log(error?.response)
     const message =
       error?.response?.data.detail || "Beklenmeyen bir hata oluştu";
 

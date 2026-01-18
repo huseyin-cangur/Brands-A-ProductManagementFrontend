@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { addCategory, updateCategory } from './CategorySlice';
 import { toast } from 'react-toastify';
 
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -39,12 +40,12 @@ type FormValues = {
 
 export const CategoryModal: React.FC<MyModalProps> = ({ open, mode, categoryId, onClose }) => {
 
-    console.log(categoryId)
+
 
 
     const dispatch = useAppDispatch();
     const isEdit = mode === "edit";
-
+    const modalTitle = mode === "edit" ? "Kategori Düzenle" : "Kategori Ekle"
 
 
     const {
@@ -128,7 +129,7 @@ export const CategoryModal: React.FC<MyModalProps> = ({ open, mode, categoryId, 
                 <Box sx={style}>
 
                     <Typography variant="h6" sx={{ mb: 2 }}>
-                        Kategori Ekle
+                     {modalTitle}
                     </Typography>
 
                     <Box

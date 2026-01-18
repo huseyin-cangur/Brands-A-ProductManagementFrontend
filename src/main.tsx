@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 import Products from './pages/Product/products';
 import Users from './pages/User/Users';
+import CredentialsSignInPage from './pages/Login/Login';
 
 
 
@@ -24,21 +25,26 @@ const router = createBrowserRouter([
             path: '',
             Component: DashboardPage,
           },
+
           {
             path: 'categories',
             Component: Categories
           },
-           {
+          {
             path: 'products',
             Component: Products
           },
-           {
+          {
             path: 'users',
             Component: Users
           }
 
 
         ],
+      },
+      {
+        path: 'login',
+        Component: CredentialsSignInPage,
       },
     ],
   },

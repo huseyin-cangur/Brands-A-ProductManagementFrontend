@@ -48,6 +48,7 @@ export const ProductModal: React.FC<MyModalProps> = ({ open, mode, productId, on
 
     const dispatch = useAppDispatch();
     const isEdit = mode === "edit";
+    const modalTitle = mode==="edit" ? "Ürün Düzenle" : "Ürün Ekle"
 
     useEffect(() => {
 
@@ -145,7 +146,7 @@ export const ProductModal: React.FC<MyModalProps> = ({ open, mode, productId, on
                 <Box sx={style}>
 
                     <Typography variant="h6" sx={{ mb: 2 }}>
-                        Ürün Ekle
+                       {modalTitle}
                     </Typography>
 
                     <Box

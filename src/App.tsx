@@ -1,4 +1,4 @@
- 
+
 import InboxIcon from '@mui/icons-material/Inbox';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import { Outlet } from 'react-router';
@@ -7,18 +7,26 @@ import type { Navigation } from '@toolpad/core/AppProvider';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import GroupIcon from '@mui/icons-material/Group';
+import { useAppSelector } from './hooks/hooks';
 
-const NAVIGATION: Navigation = [
-  {
-    kind: 'header',
-    title: 'Menü',
-  },
+type NavItem = {
+  segment?: string;
+  title: string;
+  pattern?: string;
+  icon?: JSX.Element;
+  roles?: string[]; // Bu menü hangi roller için görünecek
+  kind?: 'header';
+};
+
+const NAVIGATION: NavItem[] = [
+  { kind: 'header', title: 'Menü' },
 
   {
     segment: 'categories',
     title: 'Kategoriler',
     pattern: 'categories{/:categoryId}*',
     icon: <InboxIcon />,
+    roles: ['Admin', 'Category_User','Standart_User'],
   },
 
   {
@@ -26,16 +34,20 @@ const NAVIGATION: Navigation = [
     title: 'Ürünler',
     pattern: 'products{/:productId}*',
     icon: <ProductionQuantityLimitsIcon />,
+    roles: ['Admin', 'Product_User', 'Standart_User'],
   },
+
   {
     segment: 'users',
     title: 'Kullanıcılar',
     pattern: 'users{/:userId}*',
     icon: <GroupIcon />,
-  }
-
+    roles: ['Admin'], 
+  },
 ];
 
+
+ 
 const BRANDING = {
   title: "Brands-A Ürün Yönetimi",
 };
@@ -44,13 +56,28 @@ const BRANDING = {
 export default function App() {
 
 
+  const { user } = useAppSelector((state) => state.auth);
 
+   
+
+  const filteredNavigation = filterNavigationByRole(user?.roles || null, NAVIGATION);
   return (
 
 
-    <ReactRouterAppProvider navigation={NAVIGATION} branding={BRANDING}>
+    <ReactRouterAppProvider navigation={filteredNavigation} branding={BRANDING}>
       <ToastContainer />
       <Outlet />
     </ReactRouterAppProvider>
   );
+}
+function filterNavigationByRole(userRoles: string[] | null, nav: NavItem[]) {
+
+  console.log(userRoles)
+  if (!userRoles) return [];
+
+  return nav.filter((item) => {
+    if (item.kind === 'header') return true;  
+    if (!item.roles) return true;  
+    return item.roles.some((role) => userRoles.includes(role));
+  });
 }

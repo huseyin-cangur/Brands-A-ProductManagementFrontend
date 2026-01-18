@@ -52,6 +52,7 @@ export const UserModal: React.FC<MyModalProps> = ({ open, mode, userId, onClose 
 
     const dispatch = useAppDispatch();
     const isEdit = mode === "edit";
+    const modalTitle = mode ==="edit" ? "Kullanıcı Düzenle" :"Kullanıcı Ekle"
 
 
     const {
@@ -153,7 +154,7 @@ export const UserModal: React.FC<MyModalProps> = ({ open, mode, userId, onClose 
                 <Box sx={style}>
 
                     <Typography variant="h6" sx={{ mb: 2 }}>
-                        Kullanıcı Ekle
+                         {modalTitle}
                     </Typography>
 
                     <Box
