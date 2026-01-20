@@ -140,24 +140,25 @@ export default function Categories() {
                             </TableRow>
                         ))}
                     </TableBody>
-                    <TablePagination
-                        component="div"
-                        count={totalCount}
-                        page={pageIndex}
-                        onPageChange={(_, newPage) => {
-                            categoryService.getAll(newPage, pageSize)
-                                .then(res => dispatch(setCategory(res)));
-                        }}
-                        rowsPerPage={pageSize}
-                        onRowsPerPageChange={(e) => {
-                            const newSize = parseInt(e.target.value, 10);
-                            categoryService.getAll(0, newSize)
-                                .then(res => dispatch(setCategory(res)));
-                        }}
-                        rowsPerPageOptions={[5, 10, 25]}
-                    />
+
                 </Table>
             </TableContainer>
+            <TablePagination
+                component="div"
+                count={totalCount}
+                page={pageIndex}
+                onPageChange={(_, newPage) => {
+                    categoryService.getAll(newPage, pageSize)
+                        .then(res => dispatch(setCategory(res)));
+                }}
+                rowsPerPage={pageSize}
+                onRowsPerPageChange={(e) => {
+                    const newSize = parseInt(e.target.value, 10);
+                    categoryService.getAll(0, newSize)
+                        .then(res => dispatch(setCategory(res)));
+                }}
+                rowsPerPageOptions={[5, 10, 25]}
+            />
         </Container>
 
         <CategoryModal

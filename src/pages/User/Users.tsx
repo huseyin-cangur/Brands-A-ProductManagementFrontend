@@ -144,23 +144,24 @@ export default function Users() {
                         </TableBody>
 
                     </Table>
-                    <TablePagination
-                        component="div"
-                        count={totalCount}
-                        page={pageIndex}
-                        onPageChange={(_, newPage) => {
-                            userService.getAll(newPage, pageSize)
-                                .then(res => dispatch(setUser(res)));
-                        }}
-                        rowsPerPage={pageSize}
-                        onRowsPerPageChange={(e) => {
-                            const newSize = parseInt(e.target.value, 10);
-                            userService.getAll(0, newSize)
-                                .then(res => dispatch(setUser(res)));
-                        }}
-                        rowsPerPageOptions={[5, 10, 25]}
-                    />
+
                 </TableContainer>
+                <TablePagination
+                    component="div"
+                    count={totalCount}
+                    page={pageIndex}
+                    onPageChange={(_, newPage) => {
+                        userService.getAll(newPage, pageSize)
+                            .then(res => dispatch(setUser(res)));
+                    }}
+                    rowsPerPage={pageSize}
+                    onRowsPerPageChange={(e) => {
+                        const newSize = parseInt(e.target.value, 10);
+                        userService.getAll(0, newSize)
+                            .then(res => dispatch(setUser(res)));
+                    }}
+                    rowsPerPageOptions={[5, 10, 25]}
+                />
             </Container>
 
             <UserModal

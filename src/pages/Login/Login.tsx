@@ -9,7 +9,7 @@ import { useTheme } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { authService } from '../../services/authService';
-import { setAuthenticated } from './AuthSlice';
+import { clearAuth, setAuthenticated } from './AuthSlice';
 
 
 const providers: AuthProvider[] = [
@@ -20,6 +20,9 @@ export default function SignIn() {
   const theme = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+    
+   
 
   const signIn = async (
     _: AuthProvider,

@@ -140,23 +140,24 @@ export default function Products() {
                         </TableBody>
 
                     </Table>
-                    <TablePagination
-                        component="div"
-                        count={totalCount}
-                        page={pageIndex}
-                        onPageChange={(_, newPage) => {
-                            productService.getAll(newPage, pageSize)
-                                .then(res => dispatch(setProduct(res)));
-                        }}
-                        rowsPerPage={pageSize}
-                        onRowsPerPageChange={(e) => {
-                            const newSize = parseInt(e.target.value, 10);
-                            productService.getAll(0, newSize)
-                                .then(res => dispatch(setProduct(res)));
-                        }}
-                        rowsPerPageOptions={[5, 10, 25]}
-                    />
+
                 </TableContainer>
+                <TablePagination
+                    component="div"
+                    count={totalCount}
+                    page={pageIndex}
+                    onPageChange={(_, newPage) => {
+                        productService.getAll(newPage, pageSize)
+                            .then(res => dispatch(setProduct(res)));
+                    }}
+                    rowsPerPage={pageSize}
+                    onRowsPerPageChange={(e) => {
+                        const newSize = parseInt(e.target.value, 10);
+                        productService.getAll(0, newSize)
+                            .then(res => dispatch(setProduct(res)));
+                    }}
+                    rowsPerPageOptions={[5, 10, 25]}
+                />
             </Container>
 
             <ProductModal

@@ -9,7 +9,7 @@ interface Props {
 export default function RequireRole({ roles }: Props) {
 
 
-    console.log("roles", roles)
+  
 
 
     const { isAuthenticated, user } = useSelector(

@@ -22,7 +22,7 @@ export default function Layout() {
               onClick={() => {
                 dispatch(clearAuth())
                 localStorage.removeItem("accessToken");
-                <Navigate to="/login"/>;
+                navigate("/login");
 
               }}
               variant="contained"
