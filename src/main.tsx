@@ -10,6 +10,8 @@ import { store } from './store/store';
 import Products from './pages/Product/products';
 import Users from './pages/User/Users';
 import CredentialsSignInPage from './pages/Login/Login';
+import RequireRole from './helpers/RequireRole';
+import AuthorizationFailed from './pages/Error/AuthorizationFailed';
 
 
 
@@ -23,20 +25,39 @@ const router = createBrowserRouter([
         children: [
           {
             path: '',
+
             Component: DashboardPage,
           },
 
           {
-            path: 'categories',
-            Component: Categories
+            element: <RequireRole roles={['Category_User', 'Admin']} />,
+            children: [
+              {
+                path: 'categories',
+                Component: Categories
+              }
+            ]
+
           },
           {
-            path: 'products',
-            Component: Products
+            element: <RequireRole roles={['Product_User', 'Admin']} />,
+            children: [
+              {
+                path: 'products',
+                Component: Products
+              }
+
+            ],
+
           },
           {
-            path: 'users',
-            Component: Users
+            element: <RequireRole roles={['Admin']} />,
+            children: [
+              {
+                path: 'users',
+                Component: Users,
+              },
+            ],
           }
 
 
@@ -46,6 +67,10 @@ const router = createBrowserRouter([
         path: 'login',
         Component: CredentialsSignInPage,
       },
+      {
+        path: 'authorization-error',
+        Component: AuthorizationFailed
+      }
     ],
   },
 ]);

@@ -12,12 +12,12 @@ interface AuthUser {
 interface AuthState {
  
   user: AuthUser | null;
-  isInitialized: boolean;
+  isAuthenticated:boolean;
 }
 
 const initialState: AuthState = {
  
-  isInitialized: false,
+  isAuthenticated: false,
   user: null,
 };
 
@@ -30,7 +30,7 @@ export const authSlice = createSlice({
     setAuthenticated: (state, action: PayloadAction<AuthUser>) => {
      
       state.user = action.payload;
-      state.isInitialized = true;
+      state.isAuthenticated = true;
     },
     clearAuth: (state) => {
        

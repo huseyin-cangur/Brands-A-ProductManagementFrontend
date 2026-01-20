@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Outlet, useNavigate } from 'react-router';
+import { Navigate, Outlet, useNavigate } from 'react-router';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { Box, Button, Stack } from '@mui/material';
 import { useAppDispatch } from '../hooks/hooks';
@@ -21,8 +21,8 @@ export default function Layout() {
             <Button
               onClick={() => {
                 dispatch(clearAuth())
-                localStorage.removeItem("accessToken")
-                navigate("/login");
+                localStorage.removeItem("accessToken");
+                <Navigate to="/login"/>;
 
               }}
               variant="contained"

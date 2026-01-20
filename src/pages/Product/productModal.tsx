@@ -89,7 +89,7 @@ export const ProductModal: React.FC<MyModalProps> = ({ open, mode, productId, on
 
             const product = products.find(c => c.id == productId)
 
-            console.log(product)
+             
             reset({
                 id: product?.id,
                 name: product?.name,

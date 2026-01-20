@@ -73,8 +73,7 @@ export const UserModal: React.FC<MyModalProps> = ({ open, mode, userId, onClose 
 
 
         claimService.getAll(1, 20).then(res => {
-            console.log(res);
-
+            
             dispatch(setClaim(res))
         })
 

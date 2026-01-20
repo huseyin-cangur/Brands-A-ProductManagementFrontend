@@ -49,7 +49,7 @@ export const categorySlice = createSlice({
         (c) => c.id?.toString() !== action.payload.toString()
       );
 
-      console.log(state.categories);
+      
     },
   },
 });

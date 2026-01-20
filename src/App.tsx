@@ -79,7 +79,7 @@ export default function App() {
 }
 function filterNavigationByRole(userRoles: string[] | null, nav: NavItem[]) {
 
-  console.log(userRoles)
+   
   if (!userRoles) return [];
 
   return nav.filter((item) => {
