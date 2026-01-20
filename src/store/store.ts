@@ -5,13 +5,11 @@ import { userSlice } from "../pages/User/UserSlice";
 import { claimSlice } from "../pages/Claim/ClaimSlice";
 import authReducer from "../pages/Login/AuthSlice";
 import storage from "redux-persist/lib/storage";
-import { persistReducer, persistStore } from "redux-persist";
- 
+import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from "redux-persist";
 
 const persistConfig = {
-  key: "root",
+  key: 'auth',
   storage,
-  whitelist: ["auth"],
 };
 
 const persistedReducer = persistReducer(persistConfig, authReducer);
@@ -24,6 +22,12 @@ export const store = configureStore({
     claims: claimSlice.reducer,
     auth: persistedReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 export const persistor = persistStore(store);
 
