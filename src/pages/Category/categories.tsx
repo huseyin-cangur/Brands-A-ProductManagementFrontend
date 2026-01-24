@@ -29,11 +29,7 @@ export default function Categories() {
 
 
 
-
-
-
     const dispatch = useAppDispatch();
-
 
     const {
         categories,

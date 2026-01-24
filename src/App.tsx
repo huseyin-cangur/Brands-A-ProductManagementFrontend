@@ -1,9 +1,10 @@
 
 import InboxIcon from '@mui/icons-material/Inbox';
-import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
+import CategoryIcon from '@mui/icons-material/Category';
 import { Outlet } from 'react-router';
 import { ReactRouterAppProvider } from '@toolpad/core/react-router';
-import type { Navigation } from '@toolpad/core/AppProvider';
+import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
+import InventoryIcon from '@mui/icons-material/Inventory';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import GroupIcon from '@mui/icons-material/Group';
@@ -27,7 +28,7 @@ const NAVIGATION: NavItem[] = [
     segment: 'categories',
     title: 'Kategoriler',
     pattern: 'categories{/:categoryId}*',
-    icon: <InboxIcon />,
+    icon: <CategoryIcon />,
     roles: ['Admin', 'Category_User', 'Standart_User'],
   },
 
@@ -35,8 +36,15 @@ const NAVIGATION: NavItem[] = [
     segment: 'products',
     title: 'Ürünler',
     pattern: 'products{/:productId}*',
-    icon: <ProductionQuantityLimitsIcon />,
+    icon: <InventoryIcon />,
     roles: ['Admin', 'Product_User', 'Standart_User'],
+  },
+  {
+    segment: 'orders',
+    title: 'Siparişler',
+    pattern: 'orders{/:productId}*',
+    icon: <ShoppingCartCheckoutIcon  />,
+    roles: ['Admin'],
   },
 
   {
@@ -60,7 +68,7 @@ export default function App() {
 
   const { user } = useAppSelector((state) => state.auth);
 
- 
+
 
 
 
@@ -79,7 +87,7 @@ export default function App() {
 }
 function filterNavigationByRole(userRoles: string[] | null, nav: NavItem[]) {
 
-   
+
   if (!userRoles) return [];
 
   return nav.filter((item) => {

@@ -12,6 +12,7 @@ import Users from './pages/User/Users';
 import CredentialsSignInPage from './pages/Login/Login';
 import RequireRole from './helpers/RequireRole';
 import AuthorizationFailed from './pages/Error/AuthorizationFailed';
+import Order from './pages/Order/Order';
 
 
 
@@ -56,6 +57,15 @@ const router = createBrowserRouter([
               {
                 path: 'users',
                 Component: Users,
+              },
+            ],
+          },
+          {
+            element: <RequireRole roles={['Admin']} />,
+            children: [
+              {
+                path: 'orders',
+                Component: Order,
               },
             ],
           }

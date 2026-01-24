@@ -6,6 +6,7 @@ import { claimSlice } from "../pages/Claim/ClaimSlice";
 import authReducer from "../pages/Login/AuthSlice";
 import storage from "redux-persist/lib/storage";
 import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from "redux-persist";
+import { orderSlice } from "../pages/Order/OrderSlice";
 
 const persistConfig = {
   key: 'auth',
@@ -21,6 +22,7 @@ export const store = configureStore({
     users: userSlice.reducer,
     claims: claimSlice.reducer,
     auth: persistedReducer,
+    orders: orderSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
